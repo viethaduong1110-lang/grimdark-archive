@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viết Dữ Liệu Mới - Grimdark Archive</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    <!-- Thư viện TinyMCE bản Open Source -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#storyContent',
+        plugins: 'lists link image',
+        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist',
+        skin: 'oxide-dark', 
+        content_css: 'dark',
+        promotion: false, 
+        branding: false   
+      });
+    </script>
+    
+    <style>
+        body { background-color: #0a0a0a; color: #e5e7eb; }
+        .font-gothic { font-family: 'Cinzel', serif; }
+        .font-tech { font-family: 'Rajdhani', sans-serif; }
+    </style>
+</head>
+<body class="font-tech antialiased">
+    
+    <!-- Thanh điều hướng -->
+    <nav class="w-full bg-[#121212] border-b border-[#4a4a52] p-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-white hover:text-[#B8860B] font-gothic text-xl font-bold uppercase transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Quay lại Lưu Trữ
+            </a>
+            <span class="font-gothic text-[#8B0000] text-xl font-bold uppercase tracking-widest">Cogitator Terminal</span>
+        </div>
+    </nav>
+
+    <!-- Khu vực viết truyện -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <div class="bg-[#0f0f11] border border-[#4a4a52] p-8 shadow-lg">
+            <h1 class="font-gothic text-3xl text-white font-bold mb-8 text-center uppercase tracking-widest border-b border-[#4a4a52] pb-4">Đăng Tải Data-Slate Mới</h1>
+            
+            <form id="uploadForm" class="space-y-6">
+                <!-- Tiêu đề truyện -->
+                <div>
+                    <label class="block text-gray-400 font-bold mb-2 uppercase tracking-wide text-sm">Tiêu đề Truyện</label>
+                    <input type="text" id="title" class="w-full bg-[#121212] border border-[#4a4a52] text-white px-4 py-3 focus:outline-none focus:border-[#8B0000] transition-colors" placeholder="Ví dụ: Sự sụp đổ của Cadia..." required>
+                </div>
+
+                <!-- Phe phái -->
+                <div>
+                    <label class="block text-gray-400 font-bold mb-2 uppercase tracking-wide text-sm">Phe Phái (Faction)</label>
+                    <select id="faction" class="w-full bg-[#121212] border border-[#4a4a52] text-white px-4 py-3 focus:outline-none focus:border-[#8B0000] transition-colors">
+                        <option value="Imperium of Man">Imperium of Man</option>
+                        <option value="Forces of Chaos">Forces of Chaos</option>
+                        <option value="Aeldari">Aeldari</option>
+                        <option value="Orks">Orks</option>
+                        <option value="Tyranids">Tyranids</option>
+                    </select>
+                </div>
+
+                <!-- Ô nhập Ảnh Bìa / Nền Truyện -->
+                <div>
+                    <label class="block text-gray-400 font-bold mb-2 uppercase tracking-wide text-sm">Đường dẫn Ảnh Bìa / Nền Truyện (Cover Image)</label>
+                    <input type="text" id="coverImage" class="w-full bg-[#121212] border border-[#4a4a52] text-white px-4 py-3 focus:outline-none focus:border-[#8B0000] transition-colors" placeholder="Dán link ảnh trực tiếp (hoặc tên file ảnh trong thư mục)">
+                    <p class="text-xs text-gray-500 mt-1">Gợi ý: Bạn có thể dán link ảnh bất kỳ từ internet hoặc để trống để dùng ảnh mặc định.</p>
+                </div>
+
+                <!-- Nội dung chương 1 -->
+                <div>
+                    <label class="block text-gray-400 font-bold mb-2 uppercase tracking-wide text-sm">Nội Dung Chương 1</label>
+                    <textarea id="storyContent" class="w-full h-96 bg-[#121212]"></textarea>
+                </div>
+
+                <!-- Nút Đăng tải -->
+                <div class="pt-4 flex justify-end">
+                    <button type="button" onclick="submitStory()" class="bg-[#8B0000] hover:bg-red-700 text-white font-bold py-3 px-8 uppercase tracking-widest transition-colors border border-[#8B0000]">
+                        Truyền Dữ Liệu <i class="fa-solid fa-upload ml-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Logic xử lý API -->
+    <script>
+        async function submitStory() {
+            const title = document.getElementById("title").value;
+            const faction = document.getElementById("faction").value;
+            const coverImage = document.getElementById("coverImage").value;
+            const content = tinymce.get("storyContent").getContent();
+            
+            if (!title || !content) {
+                alert("Đạo quân Inquisition yêu cầu bạn phải nhập đủ Tiêu đề và Nội dung!");
+                return;
+            }
+
+            // 1. Tạo dữ liệu Bộ Truyện (Gửi kèm coverImage lên Backend)
+            const rawText = content.replace(/(<([^>]+)>)/gi, ""); 
+            const newStory = {
+                title: title,
+                faction: faction,
+                summary: rawText.length > 150 ? rawText.substring(0, 150) + "..." : rawText,
+                status: "Đang cập nhật",
+                coverImage: coverImage.trim() !== "" ? coverImage : null
+            };
+
+            try {
+                // 2. Gửi API lưu Truyện
+                const storyRes = await fetch('http://localhost:8080/api/stories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newStory)
+                });
+
+                if (!storyRes.ok) throw new Error("Lỗi khi tạo Data-slate");
+                const savedStory = await storyRes.json();
+
+                // 3. Tạo dữ liệu Chương 1 dựa trên ID Truyện vừa lưu
+                const newChapter = {
+                    storyId: savedStory.id,
+                    chapterNumber: 1,
+                    content: content
+                };
+
+                // 4. Gửi API lưu Chương
+                const chapterRes = await fetch('http://localhost:8080/api/chapters', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newChapter)
+                });
+
+                if (chapterRes.ok) {
+                    alert("Truyền dữ liệu thành công! Hoàng Đế ghi nhận công lao của bạn.");
+                    window.location.href = "index.html"; 
+                } else {
+                    alert("Đã lưu truyện nhưng lỗi khi lưu chương. Vui lòng kiểm tra Server.");
+                }
+
+            } catch (error) {
+                console.error("Lỗi Warp:", error);
+                alert("Lỗi kết nối Server. Vui lòng kiểm tra lại Spring Boot.");
+            }
+        }
+    </script>
+</body>
+</html>

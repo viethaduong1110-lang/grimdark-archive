@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grimdark Archive - Warhammer 40k Fanfic</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    <style>
+        body { color: #e5e7eb; }
+        .font-gothic { font-family: 'Cinzel', serif; }
+        .font-tech { font-family: 'Rajdhani', sans-serif; }
+        
+        .w40k-border { 
+            border: 2px solid #4a4a52; 
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+        
+        .filter-header-border {
+            border-top: 2px solid #4a4a52;
+            border-bottom: 2px solid #4a4a52;
+            position: relative;
+        }
+        .filter-header-border::before, .filter-header-border::after {
+            content: ''; position: absolute; width: 6px; height: 100%; background-color: #4a4a52; top: 0;
+        }
+        .filter-header-border::before { left: -6px; border: 1px solid #4a4a52; }
+        .filter-header-border::after { right: -6px; border: 1px solid #4a4a52; }
+    </style>
+</head>
+<body class="font-tech antialiased flex flex-col min-h-screen relative selection:bg-[#8B0000] selection:text-white">
+
+   <!-- LỚP NỀN DÙNG ẢNH CỤC BỘ (bg.jpg) -->
+    <div class="fixed inset-0 z-[-1]">
+        <div class="absolute inset-0 bg-[url('img.jpg')] bg-cover bg-center bg-no-repeat opacity-40"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="w-full bg-[#121212]/80 backdrop-blur-md border-b border-[#4a4a52] px-6 py-4 flex justify-between items-center z-50 sticky top-0 shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
+        <div class="flex items-center gap-3">
+            <i class="fa-solid fa-skull text-[#B8860B] text-3xl"></i>
+            <div class="flex flex-col">
+                <span class="font-gothic text-white text-2xl font-bold uppercase tracking-widest leading-none drop-shadow-md">
+                    Grimdark <span class="text-[#8B0000]">Archive</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="hidden md:flex gap-8">
+            <a href="index.html" class="text-[#B8860B] border-b-2 border-[#B8860B] pb-1 font-gothic text-sm font-bold uppercase tracking-widest transition-colors drop-shadow-md">Trang Chủ</a>
+            <a href="#danh-sach-truyen" class="text-gray-400 hover:text-white font-gothic text-sm font-bold uppercase tracking-widest transition-colors">Phe Phái</a>
+            <a href="#" class="text-gray-400 hover:text-white font-gothic text-sm font-bold uppercase tracking-widest transition-colors">Bảng Xếp Hạng</a>
+            <a href="dashboard.html" class="text-gray-400 hover:text-white font-gothic text-sm font-bold uppercase tracking-widest transition-colors">Tác Giả</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <div class="hidden lg:flex relative">
+                <input type="text" placeholder="Tìm kiếm..." class="bg-[#0a0a0a]/80 border border-[#4a4a52] text-gray-300 text-sm py-2 px-4 focus:outline-none focus:border-[#8B0000] w-48 transition-colors font-tech rounded-none">
+                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <button class="bg-[#8B0000] hover:bg-red-700 text-white font-bold py-2 px-6 uppercase tracking-widest transition-colors border border-red-900 shadow-[0_0_10px_rgba(139,0,0,0.5)]">Đăng Nhập</button>
+        </div>
+    </nav>
+
+    <header class="relative py-28 overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 relative z-10 text-center">
+            <h1 class="font-gothic text-6xl md:text-8xl text-white font-black mb-4 uppercase tracking-widest drop-shadow-[0_0_15px_rgba(139,0,0,0.9)]">
+                Chỉ Có <span class="text-[#8B0000]">Chiến Tranh</span>
+            </h1>
+            <p class="text-gray-300 text-lg md:text-xl font-tech max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
+                Nơi lưu trữ những bản ghi chép... Data-slate và thánh thư về những anh hùng, những kẻ phản bội và những thế lực tà ác trong vũ trụ Warhammer 40,000.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="#danh-sach-truyen" class="inline-block bg-gradient-to-b from-[#8B0000] to-[#5a0000] border border-red-900 text-white font-bold py-3 px-8 text-lg uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(139,0,0,0.8)] shadow-lg rounded-sm">
+                    Bắt Đầu Đọc <i class="fa-solid fa-book-open ml-2"></i>
+                </a>
+                <a href="dashboard.html" class="inline-block bg-[#121212]/80 backdrop-blur-sm border border-[#4a4a52] hover:border-gray-300 text-gray-300 hover:text-white font-bold py-3 px-8 text-lg uppercase tracking-widest transition-all shadow-lg rounded-sm">
+                    Viết Dữ Liệu Mới <i class="fa-solid fa-pen-nib ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="danh-sach-truyen" class="flex-grow pt-8 pb-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-1">
+                    <div class="w-1.5 h-8 bg-[#8B0000]"></div>
+                    <h2 class="font-gothic text-3xl text-white font-bold uppercase tracking-widest drop-shadow-lg">Lưu Trữ Nổi Bật</h2>
+                </div>
+                <p class="text-gray-400 font-tech text-sm uppercase tracking-widest ml-4">Những câu chuyện được Inquisitor đánh giá cao nhất tuần này</p>
+            </div>
+
+            <div class="mb-12">
+                <div class="flex justify-center mb-6">
+                    <div class="filter-header-border px-8 py-1 flex items-center justify-center bg-[#1a1a1f]/80 backdrop-blur-sm">
+                        <span class="text-[#B8860B] font-gothic uppercase text-lg tracking-widest font-bold drop-shadow-md">Bộ Lọc Dữ Liệu</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    
+                    <!-- Tất Cả -->
+                    <button onclick="fetchStories('')" class="flex flex-col items-center justify-center p-4 bg-[#0a0a0a]/90 backdrop-blur-sm w40k-border text-gray-400 hover:text-[#B8860B] hover:border-[#B8860B] transition-all duration-300 group shadow-lg hover:shadow-[0_0_15px_rgba(184,134,11,0.4)]">
+                        <i class="fa-solid fa-skull text-5xl mb-3 text-[#B8860B] opacity-80 group-hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(184,134,11,0.6)]"></i>
+                        <span class="font-gothic font-bold uppercase tracking-widest text-sm drop-shadow-md text-[#B8860B]">Tất Cả</span>
+                    </button>
+
+                    <!-- Imperium -->
+                    <button onclick="fetchStories('Imperium of Man')" class="flex flex-col items-center justify-center p-4 bg-[#0a0a0a]/90 backdrop-blur-sm w40k-border text-gray-400 hover:text-[#B8860B] hover:border-[#B8860B] transition-all duration-300 group shadow-lg hover:shadow-[0_0_15px_rgba(184,134,11,0.4)]">
+                        <i class="fa-solid fa-shield-halved text-5xl mb-3 text-[#B8860B] opacity-80 group-hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(184,134,11,0.6)]"></i>
+                        <span class="font-gothic font-bold uppercase tracking-widest text-sm drop-shadow-md">Imperium</span>
+                    </button>
+
+                    <!-- Chaos -->
+                    <button onclick="fetchStories('Forces of Chaos')" class="flex flex-col items-center justify-center p-4 bg-[#0a0a0a]/90 backdrop-blur-sm w40k-border text-gray-400 hover:text-[#8B0000] hover:border-[#8B0000] transition-all duration-300 group shadow-lg hover:shadow-[0_0_15px_rgba(139,0,0,0.5)]">
+                        <i class="fa-solid fa-dharmachakra text-5xl mb-3 text-[#8B0000] opacity-80 group-hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(139,0,0,0.6)]"></i>
+                        <span class="font-gothic font-bold uppercase tracking-widest text-sm drop-shadow-md">Chaos</span>
+                    </button>
+
+                    <!-- Aeldari -->
+                    <button onclick="fetchStories('Aeldari')" class="flex flex-col items-center justify-center p-4 bg-[#0a0a0a]/90 backdrop-blur-sm w40k-border text-gray-400 hover:text-[#5F9EA0] hover:border-[#5F9EA0] transition-all duration-300 group shadow-lg hover:shadow-[0_0_15px_rgba(95,158,160,0.4)]">
+                        <i class="fa-solid fa-eye text-5xl mb-3 text-[#5F9EA0] opacity-80 group-hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(95,158,160,0.6)]"></i>
+                        <span class="font-gothic font-bold uppercase tracking-widest text-sm drop-shadow-md">Aeldari</span>
+                    </button>
+
+                    <!-- Orks -->
+                    <button onclick="fetchStories('Orks')" class="flex flex-col items-center justify-center p-4 bg-[#0a0a0a]/90 backdrop-blur-sm w40k-border text-gray-400 hover:text-[#228B22] hover:border-[#228B22] transition-all duration-300 group shadow-lg hover:shadow-[0_0_15px_rgba(34,139,34,0.4)]">
+                        <i class="fa-solid fa-hand-fist text-5xl mb-3 text-[#228B22] opacity-80 group-hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(34,139,34,0.6)]"></i>
+                        <span class="font-gothic font-bold uppercase tracking-widest text-sm drop-shadow-md">Orks</span>
+                    </button>
+
+                    <!-- Tyranids -->
+                    <button onclick="fetchStories('Tyranids')" class="flex flex-col items-center justify-center p-4 bg-[#0a0a0a]/90 backdrop-blur-sm w40k-border text-gray-400 hover:border-[#9370DB] hover:text-[#9370DB] transition-all duration-300 group shadow-lg hover:shadow-[0_0_15px_rgba(147,112,219,0.4)]">
+                        <i class="fa-solid fa-disease text-5xl mb-3 text-[#9370DB] opacity-80 group-hover:opacity-100 transition-all drop-shadow-[0_0_8px_rgba(147,112,219,0.6)]"></i>
+                        <span class="font-gothic font-bold uppercase tracking-widest text-sm drop-shadow-md">Tyranids</span>
+                    </button>
+                    
+                </div>
+            </div>
+
+            <!-- Khung thẻ truyện -->
+            <div id="storyList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#050505]/95 border-t border-[#4a4a52] py-12 mt-auto relative z-10 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <i class="fa-solid fa-skull-crossbones text-[#4a4a52] text-2xl mb-4 hover:text-[#8B0000] transition-colors"></i>
+            <p class="text-gray-600 font-tech uppercase tracking-widest text-sm">
+                "The Emperor Protects"<br>
+                <span class="text-gray-700 text-xs mt-2 block">Dự án Đồ án Tốt nghiệp - Grimdark Archive Fanfic</span>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

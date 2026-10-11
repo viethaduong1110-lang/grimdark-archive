@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đọc Truyện - Grimdark Archive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        body { background-color: #0a0a0a; color: #e5e7eb; }
+        .font-gothic { font-family: 'Cinzel', serif; }
+        .font-tech { font-family: 'Rajdhani', sans-serif; }
+    </style>
+</head>
+<body class="font-tech antialiased relative">
+    <!-- Thanh điều hướng cơ bản -->
+    <nav class="w-full bg-[#121212] border-b border-[#4a4a52] p-4">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-white hover:text-[#B8860B] font-gothic text-xl font-bold uppercase transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Quay lại Lưu Trữ
+            </a>
+            <span class="font-gothic text-[#8B0000] text-xl font-bold uppercase tracking-widest">Grimdark Archive</span>
+        </div>
+    </nav>
+
+    <!-- Khu vực hiển thị nội dung truyện -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <div class="bg-[#0f0f11] border border-[#4a4a52] p-8 md:p-12 shadow-lg">
+            
+            <!-- Tiêu đề truyện sẽ hiện ở đây -->
+            <h1 id="storyTitle" class="font-gothic text-3xl md:text-5xl text-white font-bold mb-4 text-center text-[#B8860B]">Đang tải dữ liệu...</h1>
+            
+            <div class="h-px w-full bg-[#4a4a52] my-8 opacity-50"></div>
+
+            <!-- Nội dung chữ của chương truyện sẽ được nhét vào thẻ div này -->
+            <div id="chapterContent" class="text-gray-300 font-tech text-lg leading-relaxed space-y-6">
+                <div class="flex justify-center items-center h-40">
+                    <i class="fa-solid fa-cog fa-spin text-4xl text-[#4a4a52]"></i>
+                </div>
+            </div>
+
+            <div class="h-px w-full bg-[#4a4a52] my-8 opacity-50"></div>
+            
+            <div class="text-center text-[#4a4a52] text-sm uppercase tracking-widest">
+                The Emperor Protects
+            </div>
+        </div>
+    </main>
+
+    <!-- BẮT BUỘC: Nhúng file JavaScript ở cuối trang -->
+    <script src="chapter.js"></script>
+</body>
+</html>
